@@ -1,14 +1,21 @@
 import * as express from 'express';
-import * as mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import routes from './src/routes/crmRoutes';
 
 const app = express();
-const PORT = 3000;
+const PORT: number = 3000;
+const mongoUser: string = 'abe-dev';
+const mongoPass: string = 'abe123'
+
+const dbConnection = (user: string, password: string): string => {
+  return `mongodb://${user}:${password}@listingsexpressapp.vvkf8.mongodb.net/nodetypescript?retryWrites=true&w=majority`
+}
+const db = dbConnection(mongoUser, mongoPass)
 
 // mongoose connection
 mongoose.connect(
-  'mongodb://abe-dev:abe123@listingsexpressapp.vvkf8.mongodb.net/nodetypescript?retryWrites=true&w=majority',
+  db,
   {
     useMongoClient: true
   }
