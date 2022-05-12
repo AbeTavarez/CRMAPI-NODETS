@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContactSchema = void 0;
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-exports.ContactSchema = new Schema({
+const Schema = {
     firstName: {
         type: String,
         required: 'Enter a first name'
@@ -25,4 +24,5 @@ exports.ContactSchema = new Schema({
         type: Date,
         default: Date.now
     }
-});
+};
+exports.ContactSchema = new mongoose.Schema(Schema);

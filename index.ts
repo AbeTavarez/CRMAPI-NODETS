@@ -1,17 +1,18 @@
 import * as express from 'express';
-import mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 import * as bodyParser from 'body-parser';
 import routes from './src/routes/crmRoutes';
+import messenger from './src/controllers/createMessage';
+import { Settings } from './settings'
 
 const app = express();
-const PORT: number = 3000;
-const mongoUser: string = 'abe-dev';
-const mongoPass: string = 'abe123'
+
+let messages = new messenger(Settings.PORT)
 
 const dbConnection = (user: string, password: string): string => {
   return `mongodb://${user}:${password}@listingsexpressapp.vvkf8.mongodb.net/nodetypescript?retryWrites=true&w=majority`
 }
-const db = dbConnection(mongoUser, mongoPass)
+const db = dbConnection(Settings.mongoUser, Settings.mongoPass)
 
 // mongoose connection
 mongoose.connect(
@@ -29,7 +30,8 @@ routes(app);
 app.use(express.static('public'));
 
 app.get('/', (req, res) =>
-  res.send(`Node and express server is running on port ${PORT}`)
+  res.send(messages.messagePrint())
 );
 
-app.listen(PORT, () => console.log(`your server is running on port ${PORT}`));
+app.listen(Settings.PORT, () => console.log(messages.messagePrint())
+);
