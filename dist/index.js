@@ -1,21 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const express = require("express");
-const mongoose = require("mongoose");
+const dbConfig_1 = require("./dbConfig");
 const crmRoutes_1 = require("./src/routes/crmRoutes");
 const createMessage_1 = require("./src/controllers/createMessage");
 const settings_1 = require("./settings");
 const app = express();
+(0, dbConfig_1.dbConnect)();
 let messages = new createMessage_1.default(settings_1.Settings.PORT);
-const dbConnection = (user, password) => {
-    return `mongodb://${user}:${password}@listingsexpressapp.vvkf8.mongodb.net/nodetypescript?retryWrites=true&w=majority`;
-};
-const db = dbConnection(settings_1.Settings.mongoUser, settings_1.Settings.mongoPass);
 // mongoose connection
 // mongoose.Promise = global.Promise;
-mongoose.connect(db, {
-    useMongoClient: true
-});
 app.use(express.json());
 (0, crmRoutes_1.default)(app);
 // now we can set our params to expect a type of Name type

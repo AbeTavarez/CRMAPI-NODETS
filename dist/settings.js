@@ -5,7 +5,5 @@ exports.Settings = void 0;
 var Settings;
 (function (Settings) {
     Settings[Settings["PORT"] = 4000] = "PORT";
-    Settings["mongoUser"] = "abe-dev";
-    Settings["mongoPass"] = "abe123";
 })(Settings = exports.Settings || (exports.Settings = {}));
 ;
